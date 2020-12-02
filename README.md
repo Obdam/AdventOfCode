@@ -1,2 +1,2 @@
-# AdventOfCode2020
-My attempt at the Advent of Code 2020.
+# Advent Of Code
+My attempts at the annual Advent of Code event.
