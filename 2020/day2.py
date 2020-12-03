@@ -7,6 +7,7 @@ def importPasswords():
             passwords.append(line)
     return passwords
 
+# Task 1
 def checkPasswordPolicy(passwords):
     validPasswords = 0
     for password in passwords:
@@ -26,6 +27,7 @@ def checkPasswordPolicy(passwords):
 
     return validPasswords
 
+# Task 2
 def checkRealPasswordPolicy(passwords):
     validPasswords = 0
     for password in passwords:
@@ -34,11 +36,6 @@ def checkRealPasswordPolicy(passwords):
         maxNum = int(splittedPassword[2])
         policyLetter = str(splittedPassword[4]).strip()
         distortedPass = str(splittedPassword[8]).strip()
-
-        if distortedPass[maxNum - 1] == policyLetter:
-            validPasswords += 1
-        elif distortedPass[minNum - 1] == policyLetter:
-            validPasswords += 1
         
         if (policyLetter == distortedPass[maxNum - 1] and policyLetter != distortedPass[minNum - 1]) or (policyLetter != distortedPass[maxNum - 1] and policyLetter == distortedPass[minNum - 1]):
             validPasswords += 1
