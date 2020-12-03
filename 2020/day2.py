@@ -1,6 +1,5 @@
 import re
 
-
 def importPasswords():
     passwords = []
     with open("day2Input.txt", "r") as file:
@@ -8,26 +7,24 @@ def importPasswords():
             passwords.append(line)
     return passwords
 
+def checkPasswordPolicy(passwords):
+    validPasswords = 0
+    for password in passwords:
+        splittedPassword = re.split(r'(-+|:+| )', password)
+        minNum = int(splittedPassword[0])
+        maxNum = int(splittedPassword[2])
+        policyLetter = str(splittedPassword[4]).strip()
+        distortedPass = str(splittedPassword[8]).strip()
 
-# def checkPasswordPolicy(passwords):
-#     validPasswords = 0
-#     for password in passwords:
-#         splittedPassword = re.split(r'(-+|:+| )', password)
-#         minNum = int(splittedPassword[0])
-#         maxNum = int(splittedPassword[2])
-#         policyLetter = str(splittedPassword[4]).strip()
-#         distortedPass = str(splittedPassword[8]).strip()
+        count = 0
+        for letter in distortedPass:
+            if letter == policyLetter:
+                count += 1
 
-#         count = 0
-#         for letter in distortedPass:
-#             if letter == policyLetter:
-#                 count += 1
+        if count >= minNum and count <= maxNum:
+            validPasswords += 1
 
-#         if count >= minNum and count <= maxNum:
-#             validPasswords += 1
-
-#     return validPasswords
-
+    return validPasswords
 
 def checkRealPasswordPolicy(passwords):
     validPasswords = 0
