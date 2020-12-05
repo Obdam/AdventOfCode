@@ -58,19 +58,15 @@ def checkPassportfields(passport):
     if 'pid' in passport:
         if len(str(passport['pid'])) == 9:
             validPassKeys += 1
-    if 'cid' in passport:
-        validPassKeys += 1
 
-    if validPassKeys == len(validKeys) or validPassKeys == len(validExcKeys):
+    if validPassKeys == len(validExcKeys):
         return 1
     else:
         return 0
 
-
 def main():
     data = parseData()
     print(checkValidPassports(data))
-
 
 if __name__ == "__main__":
     main()
