@@ -1,7 +1,7 @@
 # Parse answer data as list objects, so you get a list with answers per group.
 def parseData():
     answerGroups = []
-    with open('day6input.txt', 'r') as file:
+    with open('/mnt/d/Code/AdventOfCode2020/2020/day6input.txt', 'r') as file:
         lines = file.read().split("\n\n")
         # Assumption: it does not matter how big a group is (a person in a group is separated by an \n)
         groups = [line.replace("\n", "") for line in lines]
@@ -22,3 +22,5 @@ def countUniqueAnswers(answers):
 
 if __name__ == "__main__":
     print(countUniqueAnswers(parseData()))
+
+
