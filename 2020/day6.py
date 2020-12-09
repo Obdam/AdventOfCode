@@ -22,5 +22,3 @@ def countUniqueAnswers(answers):
 
 if __name__ == "__main__":
     print(countUniqueAnswers(parseData()))
-
-
