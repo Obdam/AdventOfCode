@@ -1,44 +1,57 @@
 import re
 
+
 def parseData():
     rules = {}
-    with open('/mnt/d/Code/AdventOfCode2020/2020/day7test.txt', 'r') as file:
+    with open('/mnt/d/Code/AdventOfCode2020/2020/day7input.txt', 'r') as file:
         lines = file.read().split("\n")
         groups = [line.split("contain") for line in lines]
         for group in groups:
+            group[0] = group[0].strip()
+            group[1] = group[1].strip()
             ruleBags = group[1].split(',')
             rules[group[0].strip()] = {}
             for rule in ruleBags:
                 rule = rule.strip()
                 rule = rule.strip('.')
-                rule = re.split(r'(\d+) (.+?) bags?[,.]', rule)
-                rules[group[0].strip()][rule[0][1:].strip()] = rule[0][0]
-
+                if rule == 'no other bags':
+                    continue
+                else:
+                    rule = re.split(r'(\d+) (.+?) bags?[,.]', rule)
+                    rules[group[0].strip()][rule[0][1:].strip()] = rule[0][0]
     return rules
 
-def checkShinyBags(rules):
-    bagcolorCount = 0
-    for bag in bagRules:
-        print(bag)
-        for key in bagRules[bag].keys():
-            if 'shiny gold' in key:
-                bagcolorCount += 1
-                continue
+
+def checkBags(rules):
+    totalCount = 0
+    for rule in rules:
+        shinyFrequency = 0
+        ruleKeys = rules[rule].keys()
+        if 'shiny gold' in rule:
+            continue
+        for ruleKey in ruleKeys:
+            if 'shiny gold' in ruleKey:
+                totalCount += 1
             else:
-                if 'o other bags' in key:
-                    continue
-                elif 'bags' not in key:
-                    key = key + 's'
-                    for key in bagRules[key].keys():
-                        if 'shiny gold' in key:
-                            bagcolorCount += 1
-                else:
-                    for key in bagRules[key].keys():
-                        if 'shiny gold' in key:
-                            bagcolorCount += 1
-                        
-    print(bagcolorCount)
+                shinyFrequency += checkParentBag(ruleKey, rules)
+        if shinyFrequency >= 1:
+            totalCount += 1              
+        
+    print(totalCount)         
+
+def checkParentBag(ruleKey, rules):
+    shinyCount = 0
+    if 'bags' not in ruleKey:
+        ruleKey = ruleKey + 's'
+    keyList = rules[ruleKey].keys()
+    for key in keyList:
+        if 'shiny gold' in key:
+            shinyCount += 1
+        else:
+            continue
+
+    return shinyCount
 
 if __name__ == "__main__":
-    bagRules = parseData()
-    checkShinyBags(bagRules)
+    data = parseData()
+    checkBags(data)
