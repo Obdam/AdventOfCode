@@ -1,3 +1,6 @@
+import copy
+
+
 def parse_data():
     data = []
     with open('/mnt/d/Code/AdventOfCode2020/2020/day8input.txt', 'r') as file:
@@ -12,32 +15,23 @@ def parse_data():
     return data
 
 
-def find_corrupted_instruction(instructions):
-    for command in instructions:
-        test_set = instructions
+def try_corrupted_instruction(instructions):
+    for i in range(len(instructions)):
+        command = instructions[i]
+        test_set = copy.deepcopy(instructions)
         if command[0] == 'jmp':
-            test_set[instructions.index(command)][0] = 'nop'
-            end_result = test_new_instruction(test_set)
-            if end_result:
-                continue
-            else:
-                continue
+            test_set[i][0] = 'nop'
+            end_result = test_corrupted_instruction(test_set)
         elif command[0] == 'nop':
-            test_set[instructions.index(command)][0] = 'jmp'
-            end_result = test_new_instruction(test_set)
-            if end_result:
-                continue
-            else:
-                continue
-        else:
-            continue
+            test_set[i][0] = 'jmp'
+            end_result = test_corrupted_instruction(test_set)
 
 
-def test_new_instruction(test_set):
+def test_corrupted_instruction(test_set):
     index = 0
     known_indexes = []
     accumulator = 0
-    while index not in known_indexes:
+    while index not in known_indexes and index < len(test_set):
         known_indexes.append(index)
         instruction = test_set[index]
 
@@ -55,8 +49,7 @@ def test_new_instruction(test_set):
                 index -= instruction[2]
         else:
             index += 1
-
-    if test_set.index(test_set[-1]) in known_indexes:
+    if index == len(test_set):
         print('The accumulator on the end is', accumulator)
         return True
     else:
@@ -65,4 +58,4 @@ def test_new_instruction(test_set):
 
 if __name__ == "__main__":
     instructions = parse_data()
-    find_corrupted_instruction(instructions)
+    try_corrupted_instruction(instructions)
